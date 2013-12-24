@@ -1,0 +1,31 @@
+{
+	"name": "roll-carousel",
+	"title": "Roll Carousel",
+	"description": "A different kind of carousel.",
+	"keywords": [
+		"jquery",
+		"plugins",
+        "carousel"
+	],
+	"version": "0.1",
+	"author": {
+		"name": "Patrick Guido Arminio",
+		"email": "patrick.arminio@gmail.com",
+		"url": "https://github.com/patrick91"
+	},
+	"maintainers": [
+	],
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://zenorocha.mit-license.org/"
+		}
+	],
+	"bugs": "",
+	"homepage": "",
+	"docs": "",
+	"download": "",
+	"dependencies": {
+		"jquery": ">=1.10"
+	}
+}

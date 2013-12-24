@@ -1,0 +1,22 @@
+{
+	"name": "roll-carousel",
+	"title": "Roll Carousel",
+	"description": "A different kind of carousel.",
+	"author": "Patrick Guido Arminio",
+	"repository": {
+		"type" : "git",
+		"url" : ""
+	},
+	"homepage": "",
+	"version": "0.1.0",
+	"devDependencies": {
+		"grunt": "~0.4.1",
+		"grunt-cli": "~0.1.7",
+		"grunt-contrib-jshint": "~0.4.3",
+		"grunt-contrib-concat": "~0.3.0",
+		"grunt-contrib-uglify": "~0.2.0"
+	},
+	"scripts": {
+		"test": "grunt travis --verbose"
+	}
+}

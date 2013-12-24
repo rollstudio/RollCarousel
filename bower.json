@@ -1,0 +1,17 @@
+{
+	"name": "roll-carousel",
+	"version": "1.1",
+	"homepage": "",
+	"authors": [
+		"Patrick Guido Armino <patrick.arminio@gmail.com>"
+	],
+	"description": "A different kind of carousel.",
+	"main": "src/jquery.roll_carousel.js",
+	"keywords": [
+		"jquery",
+		"plugin",
+		"carousel",
+		"jquery-plugin"
+	],
+	"license": "MIT"
+}
