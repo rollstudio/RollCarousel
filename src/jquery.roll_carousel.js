@@ -48,7 +48,7 @@
             this.setWrapper();
 
             this.build();
-
+            this.setPrevNext();
             $window.resize($.proxy(this.resize, this));
         },
 
@@ -98,15 +98,8 @@
         },
 
         setEvents: function() {
-            var self = this;
-
-            this.$nextButton.on('click', function(e) {
-                self.next();
-            });
-
-            this.$prevButton.on('click', function(e) {
-                self.prev();
-            });
+            this.$nextButton.on('click', $.proxy(this.next, this));
+            this.$prevButton.on('click', $.proxy(this.prev, this));
         },
 
         buildSlides: function (rows, cols) {
@@ -181,11 +174,26 @@
             this.$outerWrapper.css('height', (h * rows + baseMargin));
         },
 
+        setPrevNext: function() {
+            if (this.currentPage === 1) {
+                this.$prevButton.prop('disabled', true);
+            } else {
+                this.$prevButton.prop('disabled', false);
+            }
+
+            if (this.currentPage === this.pages) {
+                this.$nextButton.prop('disabled', true);
+            } else {
+                this.$nextButton.prop('disabled', false);
+            }
+        },
+
         goToPage: function(page) {
             // todo: check if page is a valid page
 
             var currentPage = this.currentPage;
             this.currentPage = page;
+            this.setPrevNext();
 
             var ww = $window.width();
 
