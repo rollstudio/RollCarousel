@@ -36,7 +36,7 @@
             this.$element.wrapInner($div.clone().addClass('wrapper'));
             this.$element.wrapInner($div.clone().addClass('outer-wrapper'));
 
-            this.$wrapper = this.$element.parent();
+            this.$wrapper = this.$element.find('.wrapper');
             this.$outerWrapper = this.$wrapper.parent();
             this.$outerWrapper.css('overflow', 'hidden');
 
@@ -110,7 +110,6 @@
         },
 
         buildSlides: function (rows, cols) {
-            // todo: set total pages
             var perPage = this.perPage = rows * cols;
             this.pages = Math.ceil(this.numSlides / this.perPage);
 
@@ -163,8 +162,6 @@
                         currentRow = 0;
                     }
                 }
-
-                console.log(page);
 
                 if (page > 0) {
                     left = baseLeft + w;
