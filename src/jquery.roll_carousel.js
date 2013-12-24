@@ -33,8 +33,8 @@
             this.currentPage = 1;
             this.numSlides = this.$slides.length;
 
-            this.$element.wrap($div.clone().addClass('outer-wrapper'));
-            this.$element.wrap($div.clone().addClass('wrapper'));
+            this.$element.wrapInner($div.clone().addClass('wrapper'));
+            this.$element.wrapInner($div.clone().addClass('outer-wrapper'));
 
             this.$wrapper = this.$element.parent();
             this.$outerWrapper = this.$wrapper.parent();
