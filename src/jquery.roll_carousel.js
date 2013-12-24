@@ -18,7 +18,7 @@
 
     function Plugin(element, options) {
         this.element = element;
-        this.$element = $(element);
+        this.$element = $(element).addClass('roll-carousel');
 
         this.settings = $.extend({}, defaults, options);
         this._defaults = defaults;
