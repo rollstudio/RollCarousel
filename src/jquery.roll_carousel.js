@@ -171,7 +171,9 @@
                 });
             });
 
-            this.$outerWrapper.css('height', (h * rows + baseMargin));
+            var totalHeight = h * rows + (rows - 1) * baseMargin;
+
+            this.$outerWrapper.css('height', totalHeight);
         },
 
         setPrevNext: function() {
