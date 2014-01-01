@@ -1,6 +1,7 @@
 (function ($, window, document, undefined) {
     var pluginName = 'rollCarousel';
     var defaults = {
+        maxWidth: 1035,
         transition: '1s all linear',
         // mobile first
         defaultGrid: [1, 1],
@@ -32,6 +33,7 @@
 
             this.currentPage = 1;
             this.numSlides = this.$slides.length;
+            this.element_width = this.$element.width();
 
             this.$element.wrapInner($div.clone().addClass('wrapper'));
             this.$element.wrapInner($div.clone().addClass('outer-wrapper'));
@@ -43,12 +45,16 @@
             this.$nextButton = $button.clone().addClass('roll-next').text('next').appendTo(this.$outerWrapper);
             this.$prevButton = $button.clone().addClass('roll-prev').text('prev').appendTo(this.$outerWrapper);
 
+
             this.setEvents();
 
             this.setWrapper();
 
             this.build();
             this.setPrevNext();
+
+            
+
             $window.resize($.proxy(this.resize, this));
         },
 
@@ -61,7 +67,7 @@
         getGrid: function() {
             // todo: now everything is based on the window, maybe it's better to base them on the container
 
-            var w = $window.width();
+            var w = this.element_width;//$window.width();
 
             var sizes = Object.keys(this.settings.grid).sort();
 
@@ -93,7 +99,7 @@
         resize: function() {
             // weird things happen when resizing and the current page is not the first
             // todo: fix
-
+            this.element_width = this.$element.width();
             this.build();
         },
 
@@ -107,8 +113,8 @@
             this.pages = Math.ceil(this.numSlides / this.perPage);
 
             // todo: put this in the options maybe
-            var maxWidth = 1035;
-            var w = $window.width();
+            var maxWidth = this.settings.maxWidth;
+            var w = this.element_width;
 
             var baseMargin = 20;
             var margin = (cols > 1 ) ? baseMargin : 0; // margin between cols
@@ -197,7 +203,7 @@
             this.currentPage = page;
             this.setPrevNext();
 
-            var ww = $window.width();
+            var ww = this.element_width;//$window.width();
 
             var transition = this.settings.transition;
 
