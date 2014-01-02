@@ -8,7 +8,9 @@
         grid: {
             '500': [2, 1],
             '700': [2, 2]
-        }
+        },
+
+        margin: 20
     };
 
     var $window = $(window);
@@ -115,7 +117,7 @@
             var maxWidth = 1035;
             var w = $window.width();
 
-            var baseMargin = 20;
+            var baseMargin = this.settings.margin;
             var margin = (cols > 1 ) ? baseMargin : 0; // margin between cols
 
             var totalMargin = (cols - 1) * margin;
@@ -162,7 +164,7 @@
                 }
 
                 if (page > 0) {
-                    left = baseLeft + w;
+                    left = baseLeft + w + margin;
                 }
 
                 $$.css({
@@ -198,6 +200,8 @@
         goToPage: function(page) {
             // todo: check if page is a valid page
 
+            var margin = this.settings.margin;
+
             var currentPage = this.currentPage;
             this.currentPage = page;
             this.setPrevNext();
@@ -216,10 +220,10 @@
             // reverse animation if going back
             var reverse = currentPage > page;
 
-            var offset = ww;
+            var offset = ww + margin;
 
             if (reverse) {
-                offset = -ww;
+                offset = -offset;
             }
 
             var movingOut = this.$slides.slice(start, end).each(function() {
