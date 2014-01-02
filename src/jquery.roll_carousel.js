@@ -23,7 +23,9 @@
         this.element = element;
         this.$element = $(element).addClass('roll-carousel');
 
-        this.settings = $.extend({}, defaults, options);
+        var inlineOptions = this.$element.data('roll-carousel-options');
+
+        this.settings = $.extend({}, defaults, inlineOptions, options);
         this._defaults = defaults;
         this._name = pluginName;
         this.init();
