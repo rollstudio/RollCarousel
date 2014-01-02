@@ -117,6 +117,11 @@
 
             // todo: put this in the options maybe
             var maxWidth = this.settings.maxWidth;
+
+            if (maxWidth <= 0) {
+                maxWidth = Infinity;
+            }
+
             var w = this.elementWidth;
 
             var baseMargin = this.settings.margin;
