@@ -146,7 +146,7 @@
 
                 // suppose same height for all the slides
                 if (i === 0) {
-                    h = $$.css('width', columnWidth).height();
+                    h = $$.css('width', columnWidth).outerHeight();
                 }
 
                 var currentCol = i % cols;
@@ -172,6 +172,7 @@
                 $$.css({
                     position: 'absolute',
                     width: columnWidth,
+                    height: h,
                     'transform': 'translate3d(' + left + 'px, ' + top + 'px,0px)'
                 }).data({
                     // todo move this somewhere else
@@ -183,6 +184,7 @@
             var totalHeight = h * rows + (rows - 1) * baseMargin;
 
             this.$outerWrapper.css('height', totalHeight);
+            this.$wrapper.css('height', totalHeight);
         },
 
         setPrevNext: function() {
