@@ -49,6 +49,11 @@
 
             this.build();
             this.setPrevNext();
+
+            this.$slides.on('transitionend', function() {
+                $(this).css('transition', '');
+            });
+
             $window.resize($.proxy(this.resize, this));
         },
 
@@ -229,9 +234,7 @@
                     'transition': transition,
                     'transform': 'translate3d(' + left + 'px, ' + top + 'px,0px)'
                 });
-            }).first().off('transitionend').on('transitionend', function() {
-                // todo: move all to the right ?
-            }, false);
+            });
 
             // next elements
             // todo prev animation
