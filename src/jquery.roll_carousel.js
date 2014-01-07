@@ -112,6 +112,9 @@
         },
 
         buildSlides: function (rows, cols) {
+            this.$outerWrapper.css('height', '');
+            this.$wrapper.css('height', '');
+
             var perPage = this.perPage = rows * cols;
             this.pages = Math.ceil(this.numSlides / this.perPage);
 
@@ -151,7 +154,10 @@
 
                 // suppose same height for all the slides
                 if (i === 0) {
-                    h = $$.css('width', columnWidth).outerHeight();
+                    h = $$.css({
+                        'width': columnWidth,
+                        'height': ''
+                    }).outerHeight();
                 }
 
                 var currentCol = i % cols;
