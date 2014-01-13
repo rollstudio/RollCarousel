@@ -111,9 +111,28 @@
             this.$prevButton.on('click', $.proxy(this.prev, this));
         },
 
+        getPositionInfo: function(top, left) {
+            if (Modernizr.csstransforms3d) {
+                return {
+                    transform: 'translate3d(' + left + 'px, ' + top + 'px, 0px)'
+                };
+            } else if (Modernizr.csstransforms) {
+                return {
+                    transform: 'translate(' + left + 'px, ' + top + 'px)'
+                };
+            } else {
+                return {
+                    top: top,
+                    left: left
+                };
+            }
+        },
+
         buildSlides: function (rows, cols) {
             this.$outerWrapper.css('height', '');
             this.$wrapper.css('height', '');
+
+            var self = this;
 
             var perPage = this.perPage = rows * cols;
             this.pages = Math.ceil(this.numSlides / this.perPage);
@@ -182,12 +201,11 @@
                     left = baseLeft + w + margin;
                 }
 
-                $$.css({
+                $$.css($.extend({
                     position: 'absolute',
                     width: columnWidth,
-                    height: h,
-                    'transform': 'translate3d(' + left + 'px, ' + top + 'px,0px)'
-                }).data({
+                    height: h
+                }, self.getPositionInfo(top, left))).data({
                     // todo move this somewhere else
                     baseLeft: baseLeft,
                     baseTop: baseTop
@@ -217,6 +235,7 @@
         goToPage: function(page) {
             // todo: check if page is a valid page
 
+            var self = this;
             var margin = this.settings.margin;
 
             var currentPage = this.currentPage;
@@ -251,10 +270,9 @@
                 var left = data.baseLeft - offset;
                 var top = data.baseTop;
 
-                $$.css({
+                $$.css($.extend({
                     'transition': transition,
-                    'transform': 'translate3d(' + left + 'px, ' + top + 'px,0px)'
-                });
+                }, self.getPositionInfo(top, left)));
             });
 
             // next elements
@@ -274,14 +292,13 @@
                 var left = data.baseLeft;
                 var top = data.baseTop;
 
-                $$.css('transform', 'translate3d(' + (left + offset) + 'px, ' + top + 'px,0px)');
+                $$.css(self.getPositionInfo(top, left + offset));
 
                 // maybe force layout?
                 window.setTimeout(function() {
-                    $$.css({
+                    $$.css($.extend({
                         'transition': transition,
-                        'transform': 'translate3d(' + left + 'px, ' + top + 'px,0px)'
-                    });
+                    }, self.getPositionInfo(top, left)));
                 });
             });
         },
