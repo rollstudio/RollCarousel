@@ -8,6 +8,8 @@
 
         initialPage: 1,
 
+        slideSelector: null,
+
         grid: {
             '500': [2, 1],
             '700': [2, 2]
@@ -35,7 +37,11 @@
 
     Plugin.prototype = {
         init: function () {
-            this.$slides = this.$element.children();
+            if (this.settings.slideSelector) {
+                this.$slides = this.$element.find(this.settings.slideSelector);
+            } else {
+                this.$slides = this.$element.children();
+            }
 
             this.currentPage = this.settings.initialPage;
             this.numSlides = this.$slides.length;
