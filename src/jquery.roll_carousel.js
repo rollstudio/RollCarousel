@@ -6,6 +6,8 @@
         // mobile first
         defaultGrid: [1, 1],
 
+        initialPage: 1,
+
         grid: {
             '500': [2, 1],
             '700': [2, 2]
@@ -35,7 +37,7 @@
         init: function () {
             this.$slides = this.$element.children();
 
-            this.currentPage = 1;
+            this.currentPage = this.settings.initialPage;
             this.numSlides = this.$slides.length;
             this.elementWidth = this.$element.width();
 
@@ -100,8 +102,6 @@
         },
 
         resize: function() {
-            // weird things happen when resizing and the current page is not the first
-            // todo: fix
             this.elementWidth = this.$element.width();
             this.build();
         },
@@ -143,6 +143,8 @@
             var h = 0;
             var currentRow = 0;
 
+            var currentPage = this.currentPage;
+
             // todo: do not use jQuery, we can make it a bit faster
             this.$slides.each(function(i) {
                 var page = Math.floor(i / perPage);
@@ -176,7 +178,7 @@
                     }
                 }
 
-                if (page > 0) {
+                if (page !== currentPage - 1) {
                     left = baseLeft + w + margin;
                 }
 
