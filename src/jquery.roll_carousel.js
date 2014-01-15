@@ -110,6 +110,7 @@
         resize: function() {
             this.elementWidth = this.$element.width();
             this.build();
+            this.setPrevNext();
         },
 
         setEvents: function() {
@@ -143,8 +144,13 @@
             var perPage = this.perPage = rows * cols;
             this.pages = Math.ceil(this.numSlides / this.perPage);
 
-            // todo: put this in the options maybe
             var maxWidth = this.settings.maxWidth;
+
+            if (jQuery.type(maxWidth) === 'string') {
+                var percentage = parseFloat(maxWidth.replace('%', '')) / 100;
+
+                maxWidth = this.elementWidth * percentage;
+            }
 
             if (maxWidth <= 0) {
                 maxWidth = Infinity;
