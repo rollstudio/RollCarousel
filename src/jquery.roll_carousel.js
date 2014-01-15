@@ -220,6 +220,12 @@
 
             var totalHeight = h * rows + (rows - 1) * baseMargin;
 
+            if (this.pages === 1 && this.numSlides < perPage) {
+                var visibleRows = Math.ceil(this.numSlides / cols);
+
+                totalHeight = h * visibleRows + (visibleRows - 1) * baseMargin;
+            }
+
             this.$outerWrapper.css('height', totalHeight);
             this.$wrapper.css('height', totalHeight);
         },

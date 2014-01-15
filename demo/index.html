@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>jQuery Boilerplate</title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <head>
+        <title>jQuery Boilerplate</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
         <script src="../src/jquery.roll_carousel.js"></script>
-		<script src="js/modernizr.js"></script>
+        <script src="js/modernizr.js"></script>
 
         <style>
 
@@ -13,25 +13,25 @@
             padding: 0;
         }
 
-        #element {
+        body > div {
             width: 90%;
             margin: 0 auto;
         }
 
-        #element .wrapper > div {
+        body > div .wrapper > div {
             position: relative;
             background: #1abc9c;
             display: inline-block;
         }
 
-        #element .wrapper > div:before {
+        body > div .wrapper > div:before {
             content: '';
             display: inline-block;
 
             padding-top: 30%;
         }
 
-        #element .wrap {
+        body > div .wrap {
             position: absolute;
             top: 0;
             left: 0;
@@ -53,9 +53,9 @@
 
         </style>
 
-	</head>
-	<body>
-		<div id="element">
+    </head>
+    <body>
+        <div id="element">
             <div>
                 <div class="wrap">Hey 1</div>
             </div>
@@ -148,18 +148,49 @@
             </div>
         </div>
 
+        <h1>Rows test</h1>
+
+        <div id="rows">
+            <div>
+                <div class="wrap">Hey 1</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 2</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 3</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 4</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 5</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 6</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 7</div>
+            </div>
+        </div>
+
+
         <button id="five">Go to page five</button>
 
-		<script>
-			$(function() {
-				var $carousel = $("#element").rollCarousel({
-					propertyName: "a custom value"
-				});
+        <script>
+            $(function() {
+                var $carousel = $("#element").rollCarousel({});
 
                 $('#five').on('click', function() {
                     $carousel.rollCarousel('goToPage', 5);
                 });
-			});
-		</script>
-	</body>
+
+                $("#rows").rollCarousel({
+                    grid: {
+                        "500": [4, 4]
+                    }
+                });
+            });
+        </script>
+    </body>
 </html>
