@@ -83,6 +83,10 @@
             this.setPrevNext();
         },
 
+        getSizes: function() {
+            return Object.keys(this.settings.sizes).sort(function(a, b) { return a - b; });
+        },
+
         getOption: function(name) {
             var bp = +this.currentBreakpoint;
 
@@ -90,11 +94,11 @@
 
             var value = this.settings[name];
 
-            if (bp) {
+            if (bp > 0) {
                 if (name in sizeSettings[bp]) {
                     value = sizeSettings[bp][name];
                 } else {
-                    var sizes = Object.keys(sizeSettings).sort();
+                    var sizes = this.getSizes();
 
                     for (var i = sizes.length - 1; i >= 0; i--) {
                         var size = +sizes[i];
@@ -110,14 +114,15 @@
                 }
             }
 
+            console.log(name, value);
+
             return value;
         },
 
         getBreakpoint: function() {
             var w = this.elementWidth;
 
-            // todo: check if sorting is correct
-            var sizes = Object.keys(this.settings.sizes).sort();
+            var sizes = this.getSizes();
 
             var size = null;
 
