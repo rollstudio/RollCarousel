@@ -84,7 +84,7 @@
         },
 
         getOption: function(name) {
-            var bp = this.currentBreakpoint;
+            var bp = +this.currentBreakpoint;
 
             var sizeSettings = this.settings.sizes;
 
@@ -97,7 +97,7 @@
                     var sizes = Object.keys(sizeSettings).sort();
 
                     for (var i = sizes.length - 1; i >= 0; i--) {
-                        var size = sizes[i];
+                        var size = +sizes[i];
 
                         if (size < bp) {
                             if (name in sizeSettings[size]) {
@@ -122,7 +122,7 @@
             var size = null;
 
             for (var i = sizes.length - 1; i >= 0; i--) {
-                var tw = sizes[i];
+                var tw = +sizes[i];
 
                 if (w >= tw) {
                     size = tw;
