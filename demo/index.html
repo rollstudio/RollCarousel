@@ -51,6 +51,10 @@
             right: 0;
         }
 
+        .roll-carousel {
+            position: relative;
+        }
+
         </style>
 
     </head>
@@ -212,13 +216,15 @@
                 });
 
                 $("#rows").rollCarousel({
-                    grid: {
-                        "500": [4, 4]
+                    sizes: {
+                        '500': {
+                            grid: [4, 4]
+                        }
                     }
                 });
 
-                $("#percentage").rollCarousel({
-                    maxWidth: "80%"
+                $('#percentage').rollCarousel({
+                    maxWidth: '80%'
                 });
             });
         </script>

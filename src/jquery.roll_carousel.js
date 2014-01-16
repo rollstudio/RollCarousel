@@ -1,21 +1,26 @@
 (function ($, window, document, undefined) {
     var pluginName = 'rollCarousel';
     var defaults = {
-        maxWidth: 1035,
-        transition: '1s all linear',
-        // mobile first
-        defaultGrid: [1, 1],
-
         initialPage: 1,
-
         slideSelector: null,
 
-        grid: {
-            '500': [2, 1],
-            '700': [2, 2]
-        },
+        // options that can be redeclared in sizes
 
-        margin: 20
+        maxWidth: 1035,
+        transition: '0.5s all linear',
+        margin: 20,
+
+        grid: [1, 1],
+
+        sizes: {
+            '500': {
+                transition: '0.7s all linear',
+                grid: [2, 1]
+            },
+            '700': {
+                grid: [2, 2]
+            }
+        }
     };
 
     var $window = $(window);
@@ -61,8 +66,8 @@
 
             this.setWrapper();
 
+            this.currentBreakpoint = this.getBreakpoint();
             this.build();
-            this.setPrevNext();
 
             this.$slides.on('transitionend', function() {
                 $(this).css('transition', '');
@@ -72,15 +77,47 @@
         },
 
         build: function() {
-            var grid = this.getGrid();
+            var grid = this.getOption('grid');
 
             this.buildSlides(grid[0], grid[1]);
+            this.setPrevNext();
         },
 
-        getGrid: function() {
+        getOption: function(name) {
+            var bp = this.currentBreakpoint;
+
+            var sizeSettings = this.settings.sizes;
+
+            var value = this.settings[name];
+
+            if (bp) {
+                if (name in sizeSettings[bp]) {
+                    value = sizeSettings[bp][name];
+                } else {
+                    var sizes = Object.keys(sizeSettings).sort();
+
+                    for (var i = sizes.length - 1; i >= 0; i--) {
+                        var size = sizes[i];
+
+                        if (size < bp) {
+                            if (name in sizeSettings[size]) {
+                                value = sizeSettings[size][name];
+
+                                break;
+                            }
+                        }
+                    };
+                }
+            }
+
+            return value;
+        },
+
+        getBreakpoint: function() {
             var w = this.elementWidth;
 
-            var sizes = Object.keys(this.settings.grid).sort();
+            // todo: check if sorting is correct
+            var sizes = Object.keys(this.settings.sizes).sort();
 
             var size = null;
 
@@ -94,11 +131,7 @@
                 }
             };
 
-            if (size) {
-                return this.settings.grid[size];
-            }
-
-            return this.settings.defaultGrid;
+            return size;
         },
 
         setWrapper: function() {
@@ -109,8 +142,9 @@
 
         resize: function() {
             this.elementWidth = this.$element.width();
+            this.currentBreakpoint = this.getBreakpoint();
+
             this.build();
-            this.setPrevNext();
         },
 
         setEvents: function() {
@@ -144,7 +178,7 @@
             var perPage = this.perPage = rows * cols;
             this.pages = Math.ceil(this.numSlides / this.perPage);
 
-            var maxWidth = this.settings.maxWidth;
+            var maxWidth = this.getOption('maxWidth');
 
             if (jQuery.type(maxWidth) === 'string') {
                 var percentage = parseFloat(maxWidth.replace('%', '')) / 100;
@@ -158,7 +192,7 @@
 
             var w = this.elementWidth;
 
-            var baseMargin = this.settings.margin;
+            var baseMargin = this.getOption('margin');
             var margin = (cols > 1 ) ? baseMargin : 0; // margin between cols
 
             var totalMargin = (cols - 1) * margin;
@@ -254,7 +288,7 @@
             // todo: check if page is a valid page
 
             var self = this;
-            var margin = this.settings.margin;
+            var margin = this.getOption('margin');
 
             var currentPage = this.currentPage;
             this.currentPage = page;
@@ -262,7 +296,7 @@
 
             var ww = this.elementWidth;//$window.width();
 
-            var transition = this.settings.transition;
+            var transition = this.getOption('transition');
 
             // remove transition so that we animate only when needed
             this.$slides.css('transition', '');
@@ -297,10 +331,6 @@
             // todo prev animation
             start = (page - 1) * this.perPage;
             end = start + this.perPage;
-
-            console.log(this.$slides.slice(start, end));
-
-            console.log('reverse', reverse);
 
             this.$slides.slice(start, end).each(function() {
                 var $$ = $(this);
