@@ -5,6 +5,7 @@
         slideSelector: null,
 
         pagination: false,
+        controls: true,
 
         // options that can be redeclared in sizes
 
@@ -61,8 +62,10 @@
             this.$outerWrapper = this.$wrapper.parent();
             this.$outerWrapper.css('overflow', 'hidden');
 
-            this.$nextButton = $button.clone().addClass('roll-next').text('next').appendTo(this.$outerWrapper);
-            this.$prevButton = $button.clone().addClass('roll-prev').text('prev').appendTo(this.$outerWrapper);
+            if (this.settings.controls) {
+                this.$nextButton = $button.clone().addClass('roll-next').text('next').appendTo(this.$outerWrapper);
+                this.$prevButton = $button.clone().addClass('roll-prev').text('prev').appendTo(this.$outerWrapper);
+            }
 
             this.setWrapper();
 
@@ -159,9 +162,10 @@
         },
 
         setEvents: function() {
-            this.$nextButton.on('click', $.proxy(this.next, this));
-            this.$prevButton.on('click', $.proxy(this.prev, this));
-
+            if (this.settings.controls) {
+                this.$nextButton.on('click', $.proxy(this.next, this));
+                this.$prevButton.on('click', $.proxy(this.prev, this));
+            }
 
             if (this.$paginationContainer) {
                 this.$paginationContainer.on('click', $.proxy(function(e) {
@@ -315,6 +319,10 @@
         },
 
         setPrevNext: function() {
+            if (!this.settings.controls) {
+                return;
+            }
+
             if (this.currentPage === 1) {
                 this.$prevButton.prop('disabled', true);
             } else {
