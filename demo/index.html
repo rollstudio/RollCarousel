@@ -55,6 +55,28 @@
             position: relative;
         }
 
+        .roll-pagination {
+            text-align: center;
+        }
+
+        .roll-pagination div {
+            display: inline-block;
+            margin: 10px;
+            position: relative;
+            text-indent: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+
+            width: 10px;
+            height: 10px;
+
+            background: black;
+        }
+
+        .roll-pagination div.current {
+            background: #2980b9;
+        }
+
         </style>
 
     </head>
@@ -152,6 +174,8 @@
             </div>
         </div>
 
+        <button id="five">Go to page five</button>
+
         <h1>Rows test</h1>
 
         <div id="rows">
@@ -204,8 +228,100 @@
             </div>
         </div>
 
+        <h1>Pagination</h1>
 
-        <button id="five">Go to page five</button>
+        <div id="pagination">
+            <div>
+                <div class="wrap">Hey 1</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 2</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 3</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 4</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 5</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 6</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 7</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 8</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 9</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 10</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 11</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 12</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 13</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 14</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 15</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 16</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 17</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 18</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 19</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 20</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 21</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 22</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 23</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 24</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 25</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 26</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 27</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 28</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 29</div>
+            </div>
+            <div>
+                <div class="wrap">Hey 30</div>
+            </div>
+        </div>
 
         <script>
             $(function() {
@@ -225,6 +341,10 @@
 
                 $('#percentage').rollCarousel({
                     maxWidth: '80%'
+                });
+
+                $('#pagination').rollCarousel({
+                    pagination: true
                 });
             });
         </script>

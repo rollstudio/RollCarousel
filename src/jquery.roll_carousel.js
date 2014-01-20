@@ -4,6 +4,8 @@
         initialPage: 1,
         slideSelector: null,
 
+        pagination: false,
+
         // options that can be redeclared in sizes
 
         maxWidth: 1035,
@@ -62,8 +64,6 @@
             this.$nextButton = $button.clone().addClass('roll-next').text('next').appendTo(this.$outerWrapper);
             this.$prevButton = $button.clone().addClass('roll-prev').text('prev').appendTo(this.$outerWrapper);
 
-            this.setEvents();
-
             this.setWrapper();
 
             this.currentBreakpoint = this.getBreakpoint();
@@ -73,6 +73,8 @@
                 $(this).css('transition', '');
             });
 
+            this.setEvents();
+
             $window.resize($.proxy(this.resize, this));
         },
 
@@ -81,6 +83,10 @@
 
             this.buildSlides(grid[0], grid[1]);
             this.setPrevNext();
+
+            if (this.settings.pagination) {
+                this.buildPagination();
+            }
         },
 
         getSizes: function() {
@@ -155,6 +161,19 @@
         setEvents: function() {
             this.$nextButton.on('click', $.proxy(this.next, this));
             this.$prevButton.on('click', $.proxy(this.prev, this));
+
+
+            if (this.$paginationContainer) {
+                this.$paginationContainer.on('click', $.proxy(function(e) {
+                    this.$paginationContainer.find('.current').removeClass('current');
+
+                    var index = $(e.target).addClass('current').index();
+
+                    console.log(index);
+
+                    this.goToPage(index + 1);
+                }, this));
+            }
         },
 
         getPositionInfo: function(top, left) {
@@ -273,6 +292,26 @@
 
             this.$outerWrapper.css('height', totalHeight);
             this.$wrapper.css('height', totalHeight);
+        },
+
+        buildPagination: function() {
+            if (!this.$paginationContainer) {
+                this.$paginationContainer = $div.clone().addClass('roll-pagination');
+
+                this.$paginationContainer.insertAfter(this.$outerWrapper);
+            }
+
+            this.$paginationContainer.empty();
+
+            for (var i = 0; i < this.pages; i++) {
+                var $d = $div.clone().text(i);
+
+                if (i === this.currentPage - 1) {
+                    $d.addClass('current');
+                }
+
+                this.$paginationContainer.append($d);
+            }
         },
 
         setPrevNext: function() {
