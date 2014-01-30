@@ -53,6 +53,7 @@
             this.currentPage = this.settings.initialPage;
             this.numSlides = this.$slides.length;
             this.elementWidth = this.$element.width();
+            this.isAnimating = false;
 
             this.$element.wrapInner($div.clone().addClass('wrapper'));
             this.$element.wrapInner($div.clone().addClass('outer-wrapper'));
@@ -71,8 +72,12 @@
             this.currentBreakpoint = this.getBreakpoint();
             this.build();
 
+            var self = this;
+
             this.$slides.on('transitionend', function() {
                 $(this).css('transition', '');
+
+                self.isAnimating = false;
             });
 
             this.setEvents();
@@ -336,6 +341,12 @@
         },
 
         goToPage: function(page) {
+            if (this.isAnimating) {
+                return;
+            }
+
+            this.isAnimating = true;
+
             // todo: check if page is a valid page
 
             var self = this;
