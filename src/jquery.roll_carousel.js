@@ -372,25 +372,14 @@
                 offset = -offset;
             }
 
-            var movingOut = this.$slides.slice(start, end).each(function() {
-                var $$ = $(this);
-
-                var data = $$.data();
-
-                var left = data.baseLeft - offset;
-                var top = data.baseTop;
-
-                $$.css($.extend({
-                    'transition': transition,
-                }, self.getPositionInfo(top, left)));
-            });
+            var movingOut = this.$slides.slice(start, end);
 
             // next elements
             // todo prev animation
             start = (page - 1) * this.perPage;
             end = start + this.perPage;
 
-            this.$slides.slice(start, end).each(function() {
+            var movingIn = this.$slides.slice(start, end).each(function() {
                 var $$ = $(this);
 
                 var data = $$.data();
@@ -399,9 +388,30 @@
                 var top = data.baseTop;
 
                 $$.css(self.getPositionInfo(top, left + offset));
+            });
 
-                // maybe force layout?
-                window.setTimeout(function() {
+            window.setTimeout(function() {
+                movingIn.each(function() {
+                    var $$ = $(this);
+
+                    var data = $$.data();
+
+                    var left = data.baseLeft;
+                    var top = data.baseTop;
+
+                    $$.css($.extend({
+                        'transition': transition,
+                    }, self.getPositionInfo(top, left)));
+                });
+
+                movingOut.each(function() {
+                    var $$ = $(this);
+
+                    var data = $$.data();
+
+                    var left = data.baseLeft - offset;
+                    var top = data.baseTop;
+
                     $$.css($.extend({
                         'transition': transition,
                     }, self.getPositionInfo(top, left)));
