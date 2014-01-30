@@ -127,8 +127,6 @@
                 }
             }
 
-            console.log(name, value);
-
             return value;
         },
 
@@ -176,8 +174,6 @@
                     this.$paginationContainer.find('.current').removeClass('current');
 
                     var index = $(e.target).addClass('current').index();
-
-                    console.log(index);
 
                     this.goToPage(index + 1);
                 }, this));
