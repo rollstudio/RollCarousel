@@ -37,8 +37,7 @@
 
         var inlineOptions = this.$element.data('roll-carousel-options');
 
-        this.settings = $.extend({}, defaults, inlineOptions, options);
-        this._defaults = defaults;
+        this.settings = $.extend({}, $.fn[pluginName].defaults, inlineOptions, options);
         this._name = pluginName;
         this.init();
     }
@@ -474,5 +473,7 @@
             return returns !== undefined ? returns : this;
         }
     };
+
+    $.fn[pluginName].defaults = defaults;
 
 })(jQuery, window, document);
