@@ -7,6 +7,11 @@
         pagination: false,
         controls: true,
 
+        prevText: 'Previous',
+        nextText: 'Next',
+
+        paginationText: '{i}',
+
         // options that can be redeclared in sizes
 
         maxWidth: 1035,
@@ -63,8 +68,8 @@
             this.$outerWrapper.css('overflow', 'hidden');
 
             if (this.settings.controls) {
-                this.$nextButton = $button.clone().addClass('roll-next').text('next').appendTo(this.$outerWrapper);
-                this.$prevButton = $button.clone().addClass('roll-prev').text('prev').appendTo(this.$outerWrapper);
+                this.$nextButton = $button.clone().addClass('roll-next').text(this.settings.prevText).appendTo(this.$outerWrapper);
+                this.$prevButton = $button.clone().addClass('roll-prev').text(this.settings.nextText).appendTo(this.$outerWrapper);
             }
 
             this.setWrapper();
@@ -308,7 +313,7 @@
             this.$paginationContainer.empty();
 
             for (var i = 0; i < this.pages; i++) {
-                var $d = $div.clone().text(i);
+                var $d = $div.clone().text(this.settings.paginationText.replace('{i}', i));
 
                 if (i === this.currentPage - 1) {
                     $d.addClass('current');
