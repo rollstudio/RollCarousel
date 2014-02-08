@@ -341,15 +341,18 @@
                 return;
             }
 
-            this.isAnimating = true;
-
-            // todo: check if page is a valid page
-
             var self = this;
             var margin = this.getOption('margin');
 
             var currentPage = this.currentPage;
+
+            if (currentPage === page || page <= 0 || page > this.pages) {
+                return;
+            }
+
+            this.isAnimating = true;
             this.currentPage = page;
+
             this.setPrevNext();
 
             var ww = this.elementWidth;//$window.width();
