@@ -68,8 +68,8 @@
             this.$outerWrapper.css('overflow', 'hidden');
 
             if (this.settings.controls) {
-                this.$nextButton = $button.clone().addClass('roll-next').text(this.settings.prevText).appendTo(this.$outerWrapper);
-                this.$prevButton = $button.clone().addClass('roll-prev').text(this.settings.nextText).appendTo(this.$outerWrapper);
+                this.$nextButton = $button.clone().addClass('roll-next').text(this.settings.nextText).appendTo(this.$outerWrapper);
+                this.$prevButton = $button.clone().addClass('roll-prev').text(this.settings.prevText).appendTo(this.$outerWrapper);
             }
 
             this.setWrapper();
@@ -360,7 +360,7 @@
 
             this.setPrevNext();
 
-            var ww = this.elementWidth;//$window.width();
+            var ww = this.elementWidth;
 
             var transition = this.getOption('transition');
 
