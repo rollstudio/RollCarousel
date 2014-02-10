@@ -327,6 +327,12 @@
             $(function() {
                 var $carousel = $("#element").rollCarousel({});
 
+                $carousel.on('beforePageChange', function () {
+                    console.log('page change', arguments);
+                }).on('gridChanged', function () {
+                    console.log('grid changed', arguments);
+                });
+
                 $('#five').on('click', function() {
                     $carousel.rollCarousel('goToPage', 5);
                 });

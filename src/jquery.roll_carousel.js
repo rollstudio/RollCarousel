@@ -162,10 +162,18 @@
         },
 
         resize: function() {
+            var oldGrid = this.getOption('grid');
+
             this.elementWidth = this.$element.width();
             this.currentBreakpoint = this.getBreakpoint();
 
             this.build();
+
+            var newGrid = this.getOption('grid');
+
+            if (oldGrid !== newGrid) {
+                this.$element.trigger('gridChanged', newGrid);
+            }
         },
 
         setEvents: function() {
@@ -425,6 +433,8 @@
                     }, self.getPositionInfo(top, left)));
                 });
             });
+
+            this.$element.trigger('beforePageChange', [this.currentPage]);
         },
 
         next: function() {
