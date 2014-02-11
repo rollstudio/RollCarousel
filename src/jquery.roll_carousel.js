@@ -60,11 +60,14 @@
             this.elementWidth = this.$element.width();
             this.isAnimating = false;
 
-            this.$element.wrapInner($div.clone().addClass('wrapper'));
-            this.$element.wrapInner($div.clone().addClass('outer-wrapper'));
+            this.$outerWrapper = $div.clone().addClass('outer-wrapper');
+            this.$wrapper = $div.clone().addClass('wrapper');
 
-            this.$wrapper = this.$element.find('.wrapper');
-            this.$outerWrapper = this.$wrapper.parent();
+            this.$outerWrapper.append(this.$wrapper);
+            this.$element.append(this.$outerWrapper);
+
+            this.$wrapper.append(this.$slides);
+
             this.$outerWrapper.css('overflow', 'hidden');
 
             if (this.settings.controls) {
