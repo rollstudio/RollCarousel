@@ -355,7 +355,7 @@
             }
         },
 
-        goToPage: function(page) {
+        goToPage: function(page, disableAnimation) {
             if (this.isAnimating) {
                 return;
             }
@@ -374,14 +374,18 @@
                 this.$paginationContainer.children().eq(page - 1).addClass('current');
             }
 
-            this.isAnimating = true;
             this.currentPage = page;
 
             this.setPrevNext();
 
             var ww = this.elementWidth;
 
-            var transition = this.getOption('transition');
+            var transition = '';
+
+            if (!disableAnimation && Modernizr.csstransitions) {
+                transition = this.getOption('transition');
+                this.isAnimating = true;
+            }
 
             // remove transition so that we animate only when needed
             this.$slides.css('transition', '');
