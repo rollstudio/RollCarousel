@@ -4,13 +4,14 @@
         initialPage: 1,
         slideSelector: null,
 
-        pagination: false,
         controls: true,
 
         prevText: 'Previous',
         nextText: 'Next',
 
+        pagination: false,
         paginationText: '{i}',
+        paginationElement: null,
 
         // options that can be redeclared in sizes
 
@@ -186,10 +187,8 @@
             }
 
             if (this.$paginationContainer) {
-                this.$paginationContainer.on('click', $.proxy(function(e) {
-                    this.$paginationContainer.find('.current').removeClass('current');
-
-                    var index = $(e.target).addClass('current').index();
+                this.$paginationContainer.on('click', 'div', $.proxy(function(e) {
+                    var index = $(e.target).index();
 
                     this.goToPage(index + 1);
                 }, this));
@@ -316,9 +315,13 @@
 
         buildPagination: function() {
             if (!this.$paginationContainer) {
-                this.$paginationContainer = $div.clone().addClass('roll-pagination');
+                if (this.settings.paginationElement) {
+                    this.$paginationContainer = this.settings.paginationElement;
+                } else {
+                    this.$paginationContainer = $div.clone().addClass('roll-pagination');
 
-                this.$paginationContainer.insertAfter(this.$outerWrapper);
+                    this.$paginationContainer.insertAfter(this.$outerWrapper);
+                }
             }
 
             this.$paginationContainer.empty();
@@ -364,6 +367,11 @@
 
             if (currentPage === page || page <= 0 || page > this.pages) {
                 return;
+            }
+
+            if (this.settings.pagination) {
+                this.$paginationContainer.find('.current').removeClass('current');
+                this.$paginationContainer.children().eq(page - 1).addClass('current');
             }
 
             this.isAnimating = true;
