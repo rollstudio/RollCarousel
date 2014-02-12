@@ -193,6 +193,12 @@
                     this.goToPage(index + 1);
                 }, this));
             }
+
+            if ($.fn.hammer) {
+                this.$outerWrapper.hammer()
+                    .on('swiperight', $.proxy(this.prev, this))
+                    .on('swipeleft', $.proxy(this.next, this));
+            }
         },
 
         getPositionInfo: function(top, left) {
