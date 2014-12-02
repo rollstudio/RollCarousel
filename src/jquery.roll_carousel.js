@@ -43,6 +43,10 @@
 
         var inlineOptions = this.$element.data('roll-carousel-options');
 
+        if (inlineOptions !== undefined && typeof inlineOptions !== 'object') {
+            throw new Error('roll-carousel-options should be a valid json.');
+        }
+
         this.settings = $.extend({}, $.fn[pluginName].defaults, inlineOptions, options);
         this._name = pluginName;
         this.init();
