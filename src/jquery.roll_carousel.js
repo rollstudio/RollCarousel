@@ -263,11 +263,12 @@
 
             var currentPage = this.currentPage;
 
-            // todo: do not use jQuery, we can make it a bit faster
-            this.$slides.each(function(i) {
+            var slides = this.$slides.toArray();
+
+            for (var i = 0; i < slides.length; i++) {
                 var page = Math.floor(i / perPage);
 
-                var $$ = $(this);
+                var $$ = $(slides[i]);
 
                 var left = 0;
                 var top = 0;
@@ -309,7 +310,7 @@
                     baseLeft: baseLeft,
                     baseTop: baseTop
                 });
-            });
+            };
 
             var totalHeight = h * rows + (rows - 1) * baseMargin;
 
