@@ -34,8 +34,8 @@
 
     var $window = $(window);
 
-    var $div = $('<div />');
-    var $button = $('<button />');
+    var div = document.createElement('div');
+    var button = document.createElement('button');
 
     function Plugin(element, options) {
         this.element = element;
@@ -65,19 +65,29 @@
             this.elementWidth = this.$element.width();
             this.isAnimating = false;
 
-            this.$outerWrapper = $div.clone().addClass('outer-wrapper');
-            this.$wrapper = $div.clone().addClass('wrapper');
+            this.outerWrapper = div.cloneNode();
+            this.outerWrapper.classList.add('outer-wrapper');
 
-            this.$outerWrapper.append(this.$wrapper);
-            this.$element.append(this.$outerWrapper);
+            this.wrapper = div.cloneNode();
+            this.wrapper.classList.add('wrapper');
 
-            this.$wrapper.append(this.$slides);
+            this.outerWrapper.appendChild(this.wrapper);
+            this.$element.append(this.outerWrapper);
 
-            this.$outerWrapper.css('overflow', 'hidden');
+            $(this.wrapper).append(this.$slides);
+
+            this.outerWrapper.style.overflow = 'hidden';
 
             if (this.settings.controls) {
-                this.$nextButton = $button.clone().addClass('roll-next').text(this.settings.nextText).appendTo(this.$outerWrapper);
-                this.$prevButton = $button.clone().addClass('roll-prev').text(this.settings.prevText).appendTo(this.$outerWrapper);
+                this.nextButton = button.cloneNode();
+                this.nextButton.classList.add('roll-next');
+                this.nextButton.innerText = this.settings.nextText;
+                this.outerWrapper.appendChild(this.nextButton);
+
+                this.prevButton = button.cloneNode();
+                this.prevButton.classList.add('roll-prev');
+                this.prevButton.innerText = this.settings.prevText;
+                this.outerWrapper.appendChild(this.prevButton);
             }
 
             this.setWrapper();
@@ -164,9 +174,7 @@
         },
 
         setWrapper: function() {
-            this.$wrapper.css({
-                'position': 'relative'
-            });
+            this.wrapper.style.position = 'relative';
         },
 
         resize: function() {
@@ -186,8 +194,8 @@
 
         setEvents: function() {
             if (this.settings.controls) {
-                this.$nextButton.on('click', $.proxy(this.next, this));
-                this.$prevButton.on('click', $.proxy(this.prev, this));
+                this.nextButton.addEventListener('click', $.proxy(this.next, this), false);
+                this.prevButton.addEventListener('click', $.proxy(this.prev, this), false);
             }
 
             if (this.$paginationContainer) {
@@ -223,8 +231,8 @@
         },
 
         buildSlides: function (rows, cols) {
-            this.$outerWrapper.css('height', '');
-            this.$wrapper.css('height', '');
+            this.outerWrapper.style.height = '';
+            this.wrapper.style.height = '';
 
             var self = this;
 
@@ -319,8 +327,10 @@
                 totalHeight = h * visibleRows + (visibleRows - 1) * baseMargin;
             }
 
-            this.$outerWrapper.css('height', totalHeight);
-            this.$wrapper.css('height', totalHeight);
+            var totalHeightInPx = totalHeight + 'px';
+
+            this.outerWrapper.style.height = totalHeightInPx;
+            this.wrapper.style.height = totalHeightInPx;
         },
 
         buildPagination: function() {
@@ -328,22 +338,26 @@
                 if (this.settings.paginationElement) {
                     this.$paginationContainer = this.settings.paginationElement;
                 } else {
-                    this.$paginationContainer = $div.clone().addClass('roll-pagination');
+                    this.paginationContainer = div.cloneNode();
+                    this.paginationContainer.classList.add('roll-pagination');
 
-                    this.$paginationContainer.insertAfter(this.$outerWrapper);
+                    this.outerWrapper.parentNode.insertBefore(this.paginationContainer, this.outerWrapper.nextSibling);
                 }
             }
 
-            this.$paginationContainer.empty();
+            while (this.paginationContainer.firstChild) {
+                this.paginationContainer.removeChild(this.paginationContainer.firstChild);
+            }
 
             for (var i = 0; i < this.pages; i++) {
-                var $d = $div.clone().text(this.settings.paginationText.replace('{i}', i));
+                var d = div.cloneNode();
+                d.innnerText = this.settings.paginationText.replace('{i}', i);
 
                 if (i === this.currentPage - 1) {
-                    $d.addClass('current');
+                    d.classList.add('current');
                 }
 
-                this.$paginationContainer.append($d);
+                this.paginationContainer.appendChild(d);
             }
         },
 
@@ -353,15 +367,15 @@
             }
 
             if (this.currentPage === 1) {
-                this.$prevButton.prop('disabled', true);
+                this.prevButton.disabled = true;
             } else {
-                this.$prevButton.prop('disabled', false);
+                this.prevButton.disabled = false;
             }
 
             if (this.currentPage === this.pages) {
-                this.$nextButton.prop('disabled', true);
+                this.nextButton.disabled = true;
             } else {
-                this.$nextButton.prop('disabled', false);
+                this.nextButton.disabled = false;
             }
         },
 
